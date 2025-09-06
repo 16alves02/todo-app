@@ -64,7 +64,7 @@ A sleek, modern **Todo application** built with HTML, CSS, and JavaScript. Manag
 
 ## 📸 Screenshot
 
-![Todo App Screenshot](screenshot.png)
+![Todo App Screenshot](assets/screenshot.png)
 
 ---
 
