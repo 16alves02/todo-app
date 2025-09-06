@@ -1,0 +1,282 @@
+/* First, I reset some default styles so everything starts clean */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* I set up some color variables to use throughout the app */
+:root {
+  --primary: #FF69B4;        /* Main pink color (header, buttons, active filter) */
+  --secundary: #FFA500;  /* Orange for hover states and accents */
+  --dark: #212529;           /* Dark gray, almost black */
+  --light: #f8f9fa;          /* Very light gray background */
+  --gray: #868e96;           /* Medium gray for text */
+  --danger: #fa5252;         /* Red for delete/danger stuff */
+  --success: #40c057;        /* Green for completed tasks */
+  --border: #e9ecef;         /* Light border color */
+}
+
+/* General style for the whole page */
+body {
+  font-family: sans-serif;
+  background-color: #f1f3f5;   /* Light gray background */
+  min-height: 100vh;           /* Page takes full height */
+  display: flex;               /* Center the app */
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  color: var(--dark);          /* Text color */
+}
+
+/* Main app container */
+.app {
+  width: 100%;
+  max-width: 500px;            /* App doesn’t stretch too wide */
+  background-color: #fff;      /* White background */
+  border-radius: 12px;         /* Rounded corners */
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
+
+/* Header styles */
+header {
+  background-color: var(--primary); /* Purple bar on top */
+  color: white;
+  padding: 20px 25px;
+}
+
+header h1 {
+  font-size: 24px;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+header p {
+  font-size: 14px;
+  opacity: 0.9; /* Slightly faded date text */
+}
+
+/* Input section */
+.todo-input {
+  padding: 20px 25px;
+  display: flex;
+  gap: 10px;
+  background-color: var(--light);
+  border-bottom: 1px solid var(--border);
+}
+
+.todo-input input {
+  flex: 1;                     /* Input takes all space */
+  padding: 12px 15px;
+  border: 1px solid #dee2e6;
+  font-size: 1rem;
+  transition: all 0.2s;
+  border-radius: 6px;
+}
+
+.todo-input input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(119, 73, 248, 0.15); /* Glow effect */
+}
+
+.todo-input button {
+  background-color: var(--primary);
+  color: white;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.todo-input button:hover {
+  background-color: var(--secundary); /* Slightly lighter on hover */
+}
+
+/* Filter buttons */
+.filters {
+  display: flex;
+  gap: 15px;
+  border-bottom: 1px solid var(--border);
+  padding: 15px 25px;
+}
+
+.filter {
+  padding: 5px 3px;
+  cursor: pointer;
+  color: var(--gray);
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.filter:hover {
+  color: var(--primary);
+}
+
+.filter.active {
+  color: var(--primary);
+  border-bottom: 2px solid var(--primary);
+  font-weight: 500;
+}
+
+/* Tasks container */
+.todos-container {
+  padding: 15px 0;
+  max-height: 300px;   /* Scroll if too many tasks */
+  overflow-y: auto;
+}
+
+#todos-list {
+  list-style-type: none;
+}
+
+/* Task item styles */
+.todo-item {
+  padding: 12px 15px;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.2s;
+}
+
+.todo-item:hover {
+  background-color: var(--light); /* Highlight on hover */
+}
+
+/* Checkbox custom style */
+.checkbox-container {
+  margin-right: 15px;
+}
+
+.todo-checkbox {
+  opacity: 0; /* Hide the actual checkbox */
+  position: absolute;
+}
+
+.checkmark {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #dee2e6;
+  border-radius: 4px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+/* When checkbox is checked, turn it green */
+.todo-checkbox:checked + .checkmark {
+  background-color: var(--success);
+  border-color: var(--success);
+}
+
+/* The check icon inside the box */
+.todo-checkbox:checked + .checkmark::after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg); /* Classic checkmark shape */
+}
+
+/* Task text */
+.todo-item-text {
+  flex: 1;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+/* Strike-through completed tasks */
+.todo-item.completed .todo-item-text {
+  text-decoration: line-through;
+  color: var(--gray);
+}
+
+/* Delete button (x) */
+.delete-btn {
+  background: none;
+  border: none;
+  color: var(--gray);
+  cursor: pointer;
+  font-size: 16px;
+  opacity: 0;              /* Hidden by default */
+  transition: all 0.2s;
+}
+
+.todo-item:hover .delete-btn {
+  opacity: 1;              /* Show delete button when hovering */
+}
+
+.delete-btn:hover {
+  color: var(--danger);    /* Turn red on hover */
+}
+
+/* Empty state message */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 0;
+  color: var(--gray);
+}
+
+.empty-state i {
+  font-size: 40px;
+  margin-bottom: 10px;
+  opacity: 0.7;
+}
+
+/* Hidden class to toggle visibility */
+.hidden {
+  display: none;
+}
+
+/* Footer */
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 25px;
+  border-top: 1px solid var(--border);
+  background-color: var(--light);
+  font-size: 14px;
+}
+
+#items-left {
+  color: var(--gray);
+}
+
+#clear-completed {
+  background: none;
+  border: none;
+  color: var(--gray);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+#clear-completed:hover {
+  color: var(--danger);
+}
+
+/* GitHub link styling */
+.github-link {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #333;
+}
+
+.github-link a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.github-link i {
+  margin-right: 5px;
+}
