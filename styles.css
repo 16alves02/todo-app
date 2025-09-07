@@ -8,7 +8,7 @@
 /* I set up some color variables to use throughout the app */
 :root {
   --primary: #FF69B4;        /* Main pink color (header, buttons, active filter) */
-  --secundary: #FFA500;  /* Orange for hover states and accents */
+  --secondary: #FFA500;  /* Orange for hover states and accents */
   --dark: #212529;           /* Dark gray, almost black */
   --light: #f8f9fa;          /* Very light gray background */
   --gray: #868e96;           /* Medium gray for text */
@@ -279,4 +279,5 @@ footer {
 
 .github-link i {
   margin-right: 5px;
+
 }
