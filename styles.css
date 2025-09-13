@@ -1,47 +1,55 @@
-/* First, I reset some default styles so everything starts clean */
+/* =======================================
+   styles.css - The "skin" of the Todo App
+   =======================================
+   - HTML is the skeleton (structure)
+   - CSS is the skin (colors, layout, design)
+   - JS is the brain (interactivity)
+*/
+
+/* RESET = clean the browser’s default styles */
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  box-sizing: border-box; /* Makes width/height easier to control */
 }
 
-/* I set up some color variables to use throughout the app */
+/* COLOR VARIABLES = reusable colors (so if you change here, the whole app updates) */
 :root {
-  --primary: #FF69B4;        /* Main pink color (header, buttons, active filter) */
-  --secondary: #FFA500;  /* Orange for hover states and accents */
-  --dark: #212529;           /* Dark gray, almost black */
-  --light: #f8f9fa;          /* Very light gray background */
-  --gray: #868e96;           /* Medium gray for text */
-  --danger: #fa5252;         /* Red for delete/danger stuff */
-  --success: #40c057;        /* Green for completed tasks */
-  --border: #e9ecef;         /* Light border color */
+  --primary: #FF69B4;    /* Main pink (buttons, header, active filter) */
+  --secondary: #FFA500;  /* Orange (hover accents) */
+  --dark: #212529;       /* Dark gray, for text */
+  --light: #f8f9fa;      /* Light gray background */
+  --gray: #868e96;       /* Medium gray for secondary text */
+  --danger: #fa5252;     /* Red for delete/warning */
+  --success: #40c057;    /* Green for completed checkboxes */
+  --border: #e9ecef;     /* Light border color */
 }
 
-/* General style for the whole page */
+/* PAGE STYLE = set up background and center the app */
 body {
-  font-family: sans-serif;
-  background-color: #f1f3f5;   /* Light gray background */
-  min-height: 100vh;           /* Page takes full height */
-  display: flex;               /* Center the app */
+  font-family: sans-serif;        /* Simple clean font */
+  background-color: #f1f3f5;      /* Light gray page background */
+  min-height: 100vh;              /* Take full screen height */
+  display: flex;                  /* Flexbox for easy centering */
   justify-content: center;
   align-items: center;
   padding: 20px;
-  color: var(--dark);          /* Text color */
+  color: var(--dark);             /* Default text color */
 }
 
-/* Main app container */
+/* APP BOX = the white card in the middle */
 .app {
   width: 100%;
-  max-width: 500px;            /* App doesn’t stretch too wide */
-  background-color: #fff;      /* White background */
-  border-radius: 12px;         /* Rounded corners */
+  max-width: 500px;               /* Prevents it from being too wide */
+  background-color: #fff;         /* White background */
+  border-radius: 12px;            /* Rounded corners */
   overflow: hidden;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Soft shadow */
 }
 
-/* Header styles */
+/* HEADER = pink top bar with title + date */
 header {
-  background-color: var(--primary); /* Purple bar on top */
+  background-color: var(--primary);
   color: white;
   padding: 20px 25px;
 }
@@ -54,20 +62,20 @@ header h1 {
 
 header p {
   font-size: 14px;
-  opacity: 0.9; /* Slightly faded date text */
+  opacity: 0.9; /* Slightly faded date */
 }
 
-/* Input section */
+/* INPUT SECTION = where user types a task */
 .todo-input {
   padding: 20px 25px;
   display: flex;
-  gap: 10px;
+  gap: 10px;                       /* Space between input and button */
   background-color: var(--light);
   border-bottom: 1px solid var(--border);
 }
 
 .todo-input input {
-  flex: 1;                     /* Input takes all space */
+  flex: 1;                         /* Input takes all available space */
   padding: 12px 15px;
   border: 1px solid #dee2e6;
   font-size: 1rem;
@@ -93,10 +101,10 @@ header p {
 }
 
 .todo-input button:hover {
-  background-color: var(--secundary); /* Slightly lighter on hover */
+  background-color: var(--secondary); /* Slightly different when hovering */
 }
 
-/* Filter buttons */
+/* FILTER BUTTONS = All | Active | Completed */
 .filters {
   display: flex;
   gap: 15px;
@@ -108,12 +116,12 @@ header p {
   padding: 5px 3px;
   cursor: pointer;
   color: var(--gray);
-  border-bottom: 2px solid transparent;
+  border-bottom: 2px solid transparent; /* Only visible when active */
   transition: all 0.2s;
 }
 
 .filter:hover {
-  color: var(--primary);
+  color: var(--primary); /* Highlight when mouse is over */
 }
 
 .filter.active {
@@ -122,18 +130,18 @@ header p {
   font-weight: 500;
 }
 
-/* Tasks container */
+/* TASKS LIST = where all <li> tasks live */
 .todos-container {
   padding: 15px 0;
-  max-height: 300px;   /* Scroll if too many tasks */
+  max-height: 300px;   /* Scroll appears if tasks overflow */
   overflow-y: auto;
 }
 
 #todos-list {
-  list-style-type: none;
+  list-style-type: none; /* Removes bullet points */
 }
 
-/* Task item styles */
+/* TASK ITEM = each row of the list */
 .todo-item {
   padding: 12px 15px;
   display: flex;
@@ -142,16 +150,16 @@ header p {
 }
 
 .todo-item:hover {
-  background-color: var(--light); /* Highlight on hover */
+  background-color: var(--light); /* Highlight row on hover */
 }
 
-/* Checkbox custom style */
+/* CHECKBOX = custom design instead of browser’s default */
 .checkbox-container {
   margin-right: 15px;
 }
 
 .todo-checkbox {
-  opacity: 0; /* Hide the actual checkbox */
+  opacity: 0;           /* Hide the real checkbox */
   position: absolute;
 }
 
@@ -166,13 +174,13 @@ header p {
   transition: all 0.2s;
 }
 
-/* When checkbox is checked, turn it green */
+/* When checkbox is checked → green */
 .todo-checkbox:checked + .checkmark {
   background-color: var(--success);
   border-color: var(--success);
 }
 
-/* The check icon inside the box */
+/* White tick mark (✔) inside green box */
 .todo-checkbox:checked + .checkmark::after {
   content: "";
   position: absolute;
@@ -182,12 +190,12 @@ header p {
   height: 10px;
   border: solid white;
   border-width: 0 2px 2px 0;
-  transform: rotate(45deg); /* Classic checkmark shape */
+  transform: rotate(45deg);
 }
 
-/* Task text */
+/* TASK TEXT */
 .todo-item-text {
-  flex: 1;
+  flex: 1;               /* Take remaining space */
   font-size: 1rem;
   transition: all 0.2s;
 }
@@ -198,7 +206,7 @@ header p {
   color: var(--gray);
 }
 
-/* Delete button (x) */
+/* DELETE BUTTON (X) */
 .delete-btn {
   background: none;
   border: none;
@@ -210,14 +218,14 @@ header p {
 }
 
 .todo-item:hover .delete-btn {
-  opacity: 1;              /* Show delete button when hovering */
+  opacity: 1;              /* Appears only on hover */
 }
 
 .delete-btn:hover {
-  color: var(--danger);    /* Turn red on hover */
+  color: var(--danger);    /* Turns red on hover */
 }
 
-/* Empty state message */
+/* EMPTY STATE = message when no tasks exist */
 .empty-state {
   display: flex;
   flex-direction: column;
@@ -233,12 +241,12 @@ header p {
   opacity: 0.7;
 }
 
-/* Hidden class to toggle visibility */
+/* Class used to hide elements with JS */
 .hidden {
   display: none;
 }
 
-/* Footer */
+/* FOOTER = bottom area with counter + clear button + GitHub link */
 footer {
   display: flex;
   justify-content: space-between;
@@ -265,7 +273,7 @@ footer {
   color: var(--danger);
 }
 
-/* GitHub link styling */
+/* GITHUB LINK = small credit at the bottom */
 .github-link {
   margin-top: 10px;
   font-size: 14px;
@@ -279,5 +287,4 @@ footer {
 
 .github-link i {
   margin-right: 5px;
-
 }
