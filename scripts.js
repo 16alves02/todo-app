@@ -1,122 +1,144 @@
 // =======================================
+// scripts.js - O "cérebro" da Todo App
 // scripts.js - The "brain" of the Todo App
 // =======================================
-// This file makes the app interactive.
-// It takes care of:
-//  - Adding new tasks
-//  - Marking tasks as completed
-//  - Showing only "All", "Active", or "Completed" tasks
-//  - Saving tasks in localStorage (so they don’t disappear when refreshing the page)
+//
+// PT: Este ficheiro torna a aplicação interativa.
+// EN: This file makes the app interactive.
+//
+// PT: Responsável por:
+// EN: Responsible for:
+//  - Adicionar novas tarefas / Adding new tasks
+//  - Marcar tarefas como concluídas / Marking tasks as completed
+//  - Filtrar tarefas (Todas, Ativas, Concluídas) / Filtering tasks
+//  - Guardar tarefas no localStorage / Saving tasks in localStorage
+//
 
-// 1. Grab important elements from the HTML (so we can control them with JS)
-const taskInput = document.getElementById("task-input"); // The text box where the user types a task
-const addTaskBtn = document.getElementById("add-task");  // The "+" button to add the task
-const todosList = document.getElementById("todos-list"); // The <ul> where all tasks appear
-const itemsLeft = document.getElementById("items-left"); // The text at the bottom saying "X items left"
-const clearCompletedBtn = document.getElementById("clear-completed"); // Button to remove finished tasks
-const emptyState = document.querySelector(".empty-state"); // Message "No tasks here yet"
-const dateElement = document.getElementById("date"); // Where we show today’s date
-const filters = document.querySelectorAll(".filter"); // The buttons: All | Active | Completed
+// =======================================
+// 1. Selecionar elementos importantes do HTML
+// 1. Grab important HTML elements
+// =======================================
 
-// 2. Where we keep our data (an array of objects)
-let todos = [];              // Example: [{ id: 1, text: "Buy milk", completed: false }]
-let currentFilter = "all";   // By default, show ALL tasks
+const taskInput = document.getElementById("task-input");      // PT: Caixa de texto | EN: Input field
+const addTaskBtn = document.getElementById("add-task");       // PT: Botão "+" | EN: "+" button
+const todosList = document.getElementById("todos-list");      // PT: Lista UL | EN: UL list
+const itemsLeft = document.getElementById("items-left");      // PT: Contador | EN: Items counter
+const clearCompletedBtn = document.getElementById("clear-completed"); // PT: Limpar concluídas | EN: Clear completed
+const emptyState = document.querySelector(".empty-state");    // PT: Mensagem "vazio" | EN: Empty state message
+const dateElement = document.getElementById("date");          // PT: Data atual | EN: Today's date
+const filters = document.querySelectorAll(".filter");         // PT: Filtros | EN: Filter buttons
 
-// 3. Event listeners = "when something happens, do something"
-// When the user clicks the "+" button → add a task
+// =======================================
+// 2. Estrutura de dados
+// 2. Data structure
+// =======================================
+
+let todos = [];              // PT: Lista de tarefas | EN: Array of tasks
+let currentFilter = "all";   // PT: Filtro atual | EN: Current filter
+
+// =======================================
+// 3. Event Listeners (ações do utilizador)
+// 3. Event Listeners (user actions)
+// =======================================
+
+// PT: Clicar no botão "+" → adicionar tarefa
+// EN: Clicking "+" button → add task
 addTaskBtn.addEventListener("click", () => {
   addTodo(taskInput.value);
 });
 
-// When the user presses ENTER inside the text box → also add a task
+// PT: Premir ENTER → adicionar tarefa
+// EN: Pressing ENTER → add task
 taskInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter") addTodo(taskInput.value);
 });
 
-// When the user clicks "Clear completed" → remove ALL finished tasks at once
+// PT: Limpar todas as concluídas
+// EN: Clear all completed tasks
 clearCompletedBtn.addEventListener("click", clearCompleted);
 
-// 4. Functions = blocks of code that do specific jobs
+// =======================================
+// 4. Funções principais
+// 4. Main functions
+// =======================================
 
-// Add a new task
+// PT: Adicionar nova tarefa
+// EN: Add a new task
 function addTodo(text) {
-  if (text.trim() === "") return; // Ignore if the input is empty
+  if (text.trim() === "") return; // PT: Ignorar vazio | EN: Ignore empty input
 
-  // Create a new task as an object
   const todo = {
-    id: Date.now(),   // Unique ID (so each task is different, even with same text)
-    text,             // The text the user typed
-    completed: false, // New tasks always start as not completed
+    id: Date.now(),     // PT: ID único | EN: Unique ID
+    text,               // PT: Texto da tarefa | EN: Task text
+    completed: false,   // PT: Começa por não concluída | EN: Starts incomplete
   };
 
-  // Add the task to our list
   todos.push(todo);
-
-  // Save tasks and show them on the screen
   saveTodos();
   renderTodos();
-
-  // Clear the input box (ready for the next task)
-  taskInput.value = "";
+  taskInput.value = ""; // PT: Limpar input | EN: Clear input
 }
 
-// Save tasks to localStorage (so they stay even after refreshing)
+// PT: Guardar no localStorage
+// EN: Save to localStorage
 function saveTodos() {
-  localStorage.setItem("todos", JSON.stringify(todos)); // Store array as text
-  updateItemsCount();   // Update "X items left"
-  checkEmptyState();    // Show/hide "No tasks here yet"
+  localStorage.setItem("todos", JSON.stringify(todos));
+  updateItemsCount();
+  checkEmptyState();
 }
 
-// Count how many tasks are not completed
+// PT: Contar tarefas por concluir
+// EN: Count uncompleted tasks
 function updateItemsCount() {
-  const uncompletedTodos = todos.filter((todo) => !todo.completed);
-  // Example: If 2 tasks are not completed → "2 items left"
-  itemsLeft.textContent = `${uncompletedTodos.length} item${
-    uncompletedTodos.length !== 1 ? "s" : ""
+  const uncompleted = todos.filter((todo) => !todo.completed);
+  itemsLeft.textContent = `${uncompleted.length} item${
+    uncompleted.length !== 1 ? "s" : ""
   } left`;
 }
 
-// Check if the list is empty and show the "No tasks here yet" message
+// PT: Mostrar/ocultar estado vazio
+// EN: Show/hide empty state
 function checkEmptyState() {
-  const filteredTodos = filterTodos(currentFilter);
-  if (filteredTodos.length === 0) emptyState.classList.remove("hidden");
-  else emptyState.classList.add("hidden");
+  const filtered = filterTodos(currentFilter);
+  filtered.length === 0
+    ? emptyState.classList.remove("hidden")
+    : emptyState.classList.add("hidden");
 }
 
-// Decide which tasks to show depending on the filter
+// PT: Filtrar tarefas
+// EN: Filter tasks
 function filterTodos(filter) {
   switch (filter) {
-    case "active":     // Show only unfinished tasks
+    case "active":
       return todos.filter((todo) => !todo.completed);
-    case "completed":  // Show only finished tasks
+    case "completed":
       return todos.filter((todo) => todo.completed);
-    default:           // Show all tasks
+    default:
       return todos;
   }
 }
 
-// Show tasks on the screen
+// PT: Renderizar tarefas no ecrã
+// EN: Render tasks on screen
 function renderTodos() {
-  todosList.innerHTML = ""; // Clear the list first
+  todosList.innerHTML = ""; // PT: Limpar lista | EN: Clear list
 
-  const filteredTodos = filterTodos(currentFilter); // Apply current filter
+  const filtered = filterTodos(currentFilter);
 
-  // For each task in the list...
-  filteredTodos.forEach((todo) => {
-    // Create a list item <li>
+  filtered.forEach((todo) => {
     const todoItem = document.createElement("li");
     todoItem.classList.add("todo-item");
-    if (todo.completed) todoItem.classList.add("completed"); // Add strike-through style if done
+    if (todo.completed) todoItem.classList.add("completed");
 
-    // Create the checkbox
+    // === Checkbox ===
     const checkboxContainer = document.createElement("label");
     checkboxContainer.classList.add("checkbox-container");
 
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.classList.add("todo-checkbox");
-    checkbox.checked = todo.completed; // Checked if already completed
-    checkbox.addEventListener("change", () => toggleTodo(todo.id)); // Toggle on click
+    checkbox.checked = todo.completed;
+    checkbox.addEventListener("change", () => toggleTodo(todo.id));
 
     const checkmark = document.createElement("span");
     checkmark.classList.add("checkmark");
@@ -124,92 +146,95 @@ function renderTodos() {
     checkboxContainer.appendChild(checkbox);
     checkboxContainer.appendChild(checkmark);
 
-    // Create the text
+    // === Texto ===
     const todoText = document.createElement("span");
     todoText.classList.add("todo-item-text");
     todoText.textContent = todo.text;
 
-    // Create the delete button
+    // === Botão apagar ===
     const deleteBtn = document.createElement("button");
     deleteBtn.classList.add("delete-btn");
     deleteBtn.innerHTML = '<i class="fas fa-times"></i>';
     deleteBtn.addEventListener("click", () => deleteTodo(todo.id));
 
-    // Put everything together inside the <li>
+    // PT: Montar o item
+    // EN: Assemble the item
     todoItem.appendChild(checkboxContainer);
     todoItem.appendChild(todoText);
     todoItem.appendChild(deleteBtn);
 
-    // Add <li> into the <ul>
     todosList.appendChild(todoItem);
   });
 }
 
-// Remove all finished tasks
+// PT: Remover todas as concluídas
+// EN: Remove all completed tasks
 function clearCompleted() {
   todos = todos.filter((todo) => !todo.completed);
   saveTodos();
   renderTodos();
 }
 
-// Switch task status: from active → completed, or the opposite
+// PT: Alternar estado (ativo ↔ concluído)
+// EN: Toggle task status (active ↔ completed)
 function toggleTodo(id) {
-  todos = todos.map((todo) => {
-    if (todo.id === id) {
-      return { ...todo, completed: !todo.completed }; // Flip the completed value
-    }
-    return todo;
-  });
+  todos = todos.map((todo) =>
+    todo.id === id ? { ...todo, completed: !todo.completed } : todo
+  );
   saveTodos();
   renderTodos();
 }
 
-// Delete a single task
+// PT: Apagar uma tarefa
+// EN: Delete a single task
 function deleteTodo(id) {
   todos = todos.filter((todo) => todo.id !== id);
   saveTodos();
   renderTodos();
 }
 
-// Load tasks from localStorage when the page starts
+// PT: Carregar tarefas guardadas
+// EN: Load saved tasks
 function loadTodos() {
-  const storedTodos = localStorage.getItem("todos");
-  if (storedTodos) todos = JSON.parse(storedTodos);
+  const stored = localStorage.getItem("todos");
+  if (stored) todos = JSON.parse(stored);
   renderTodos();
 }
 
-// Make filter buttons work
+// PT: Ativar filtros
+// EN: Enable filters
 filters.forEach((filter) => {
   filter.addEventListener("click", () => {
     setActiveFilter(filter.getAttribute("data-filter"));
   });
 });
 
-// Highlight the active filter
+// PT: Destacar filtro ativo
+// EN: Highlight active filter
 function setActiveFilter(filter) {
   currentFilter = filter;
 
   filters.forEach((item) => {
-    if (item.getAttribute("data-filter") === filter) {
-      item.classList.add("active");
-    } else {
-      item.classList.remove("active");
-    }
+    item.classList.toggle(
+      "active",
+      item.getAttribute("data-filter") === filter
+    );
   });
 
   renderTodos();
 }
 
-// Show today’s date in the header (e.g. "Saturday, Sep 13")
+// PT: Mostrar data atual
+// EN: Display today's date
 function setDate() {
   const options = { weekday: "long", month: "short", day: "numeric" };
-  const today = new Date();
-  dateElement.textContent = today.toLocaleDateString("en-US", options);
+  dateElement.textContent = new Date().toLocaleDateString("en-US", options);
 }
 
-// Start the app when the page is ready
+// PT: Iniciar aplicação
+// EN: Initialize app
 window.addEventListener("DOMContentLoaded", () => {
-  loadTodos();        // Bring back saved tasks
-  updateItemsCount(); // Show how many are left
-  setDate();          // Show today’s date
+  loadTodos();
+  updateItemsCount();
+  setDate();
 });
