@@ -1,26 +1,46 @@
 <!-- =======================================
+     index.html - Estrutura base da Todo App
      index.html - The "skeleton" of the Todo App
      =======================================
-     This file is the structure of the app.
-     Think of it like the "bones" of a body:
-       - HTML = skeleton
+     PT: Este ficheiro define a estrutura da aplicação.
+     EN: This file defines the structure of the application.
+
+     PT: Pensa nisto como o "esqueleto" do corpo:
+     EN: Think of it like the "bones" of a body:
+
+       - HTML = esqueleto / estrutura
+       - HTML = skeleton / structure
+
+       - CSS = pele / design
        - CSS = skin / design
-       - JS = brain (makes it move)
+
+       - JS = cérebro (faz tudo funcionar)
+       - JS = brain (makes everything work)
 -->
 
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <!-- Makes the app look good on phones (responsive design) -->
+
+    <!-- 
+      PT: Garante que o layout funciona bem em telemóveis (design responsivo).
+      EN: Ensures the layout looks good on phones (responsive design).
+    -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Todo App</title>
 
-    <!-- Link to the CSS file = styles for colors, layout, fonts, etc. -->
+    <!-- 
+      PT: Liga o ficheiro CSS — controla cores, layout, fontes, espaçamentos, etc.
+      EN: Links the CSS file — controls colors, layout, fonts, spacing, etc.
+    -->
     <link rel="stylesheet" href="styles.css" />
 
-    <!-- Font Awesome = library with free icons (plus sign, check, X, etc.) -->
+    <!-- 
+      PT: Font Awesome — biblioteca de ícones (check, plus, X, clipboard, etc.)
+      EN: Font Awesome — icon library (check, plus, X, clipboard, etc.)
+    -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
@@ -31,79 +51,130 @@
   </head>
 
   <body>
-    <!-- The whole app sits inside this main box -->
+    <!-- 
+      PT: Toda a aplicação vive dentro desta caixa principal.
+      EN: The entire app lives inside this main container.
+    -->
     <div class="app">
       
-      <!-- HEADER = title and today’s date -->
+      <!-- 
+        PT: HEADER — título e data atual.
+        EN: HEADER — title and today’s date.
+      -->
       <header>
         <h1>
-          <!-- Icon for style (green check circle) -->
+          <!-- PT: Ícone decorativo (círculo verde com check). -->
+          <!-- EN: Decorative icon (green check circle). -->
           <i class="fas fa-check-circle"></i>
           My Tasks
         </h1>
-        <!-- JS will insert today’s date here -->
+
+        <!-- 
+          PT: A data do dia será inserida aqui via JavaScript.
+          EN: Today’s date will be inserted here by JavaScript.
+        -->
         <p id="date"></p>
       </header>
 
-      <!-- INPUT SECTION = where the user types a new task -->
+      <!-- 
+        PT: Secção onde o utilizador escreve uma nova tarefa.
+        EN: Section where the user types a new task.
+      -->
       <div class="todo-input">
-        <!-- Text box to write the task -->
+
+        <!-- 
+          PT: Caixa de texto para escrever a tarefa.
+          EN: Text input where the user writes the task.
+        -->
         <input 
           type="text" 
           id="task-input" 
           placeholder="What do you need to do?" 
         />
-        <!-- Button with plus sign = adds the task -->
+
+        <!-- 
+          PT: Botão com ícone "+" para adicionar a tarefa.
+          EN: Button with "+" icon to add the task.
+        -->
         <button id="add-task">
           <i class="fas fa-plus"></i>
         </button>
       </div>
 
-      <!-- FILTERS = buttons to switch between All | Active | Completed -->
+      <!-- 
+        PT: Filtros — permitem alternar entre Todas | Ativas | Concluídas.
+        EN: Filters — switch between All | Active | Completed.
+      -->
       <div class="filters">
         <span class="filter active" data-filter="all"> All </span>
         <span class="filter" data-filter="active"> Active </span>
         <span class="filter" data-filter="completed"> Completed </span>
       </div>
 
-      <!-- TASKS LIST = where all tasks will appear -->
+      <!-- 
+        PT: Lista onde todas as tarefas aparecem.
+        EN: List where all tasks will appear.
+      -->
       <div class="todos-container">
         <ul id="todos-list">
-          <!-- Example of a task manually added -->
+
+          <!-- 
+            PT: Exemplo de tarefa adicionada manualmente (normalmente é JS que cria estas linhas).
+            EN: Example of a manually added task (normally JS generates these items).
+          -->
           <li class="todo-item">
-            <!-- Checkbox to mark as done -->
+
+            <!-- 
+              PT: Checkbox para marcar a tarefa como concluída.
+              EN: Checkbox to mark the task as completed.
+            -->
             <label class="checkbox-container">
               <input type="checkbox" class="todo-checkbox" />
               <span class="checkmark"></span>
             </label>
 
-            <!-- The actual text of the task -->
+            <!-- 
+              PT: Texto da tarefa.
+              EN: Task text.
+            -->
             <span class="todo-item-text">Buy groceries</span>
 
-            <!-- Button to delete the task (X icon) -->
+            <!-- 
+              PT: Botão para apagar a tarefa (ícone X).
+              EN: Button to delete the task (X icon).
+            -->
             <button class="delete-btn">
               <i class="fas fa-times"></i>
             </button>
           </li>
-          <!-- NOTE: Normally, tasks are generated by JavaScript -->
         </ul>
 
-        <!-- If no tasks exist, this message will show -->
+        <!-- 
+          PT: Mensagem mostrada quando não existem tarefas.
+          EN: Message shown when no tasks exist.
+        -->
         <div class="empty-state hidden">
           <i class="fas fa-clipboard-list"></i>
           <p>No tasks here yet</p>
         </div>
       </div>
 
-      <!-- FOOTER = task counter, clear button, and credit -->
+      <!-- 
+        PT: Rodapé — contador de tarefas, botão de limpar concluídas e link do GitHub.
+        EN: Footer — task counter, clear completed button, and GitHub link.
+      -->
       <footer>
-        <!-- Shows how many tasks are left -->
+
+        <!-- PT: Mostra quantas tarefas faltam. -->
+        <!-- EN: Shows how many tasks are left. -->
         <p id="items-left">0 items left</p>
 
-        <!-- Button to delete all completed tasks at once -->
+        <!-- PT: Botão para apagar todas as tarefas concluídas. -->
+        <!-- EN: Button to delete all completed tasks. -->
         <button id="clear-completed">Clear completed</button>
 
-        <!-- Credit (GitHub link to the author) -->
+        <!-- PT: Link para o GitHub do autor. -->
+        <!-- EN: Link to the author's GitHub. -->
         <p class="github-link">
           <i class="fab fa-github"></i>
           <a href="https://github.com/16alves02" target="_blank">16alves02</a>
@@ -111,7 +182,10 @@
       </footer>
     </div>
 
-    <!-- At the very end, load the JS file (so everything works) -->
+    <!-- 
+      PT: Carrega o ficheiro JavaScript no final (boa prática).
+      EN: Loads the JavaScript file at the end (best practice).
+    -->
     <script src="scripts.js"></script>
   </body>
 </html>
