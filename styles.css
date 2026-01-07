@@ -1,55 +1,63 @@
 /* =======================================
-   styles.css - The "skin" of the Todo App
+   styles.css — The "skin" of the Todo App
+   styles.css — A "pele" da Todo App
    =======================================
+
+   EN:
    - HTML is the skeleton (structure)
    - CSS is the skin (colors, layout, design)
    - JS is the brain (interactivity)
+
+   PT:
+   - HTML é o esqueleto (estrutura)
+   - CSS é a pele (cores, layout, design)
+   - JS é o cérebro (interatividade)
 */
 
-/* RESET = clean the browser’s default styles */
+/* ---------- RESET (PT: limpar estilos base | EN: reset browser defaults) ---------- */
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box; /* Makes width/height easier to control */
+  box-sizing: border-box;
 }
 
-/* COLOR VARIABLES = reusable colors (so if you change here, the whole app updates) */
+/* ---------- COLOR SYSTEM (PT: paleta global | EN: global color palette) ---------- */
 :root {
-  --primary: #FF69B4;    /* Main pink (buttons, header, active filter) */
-  --secondary: #FFA500;  /* Orange (hover accents) */
-  --dark: #212529;       /* Dark gray, for text */
-  --light: #f8f9fa;      /* Light gray background */
-  --gray: #868e96;       /* Medium gray for secondary text */
-  --danger: #fa5252;     /* Red for delete/warning */
-  --success: #40c057;    /* Green for completed checkboxes */
-  --border: #e9ecef;     /* Light border color */
+  --primary: #FF69B4;
+  --secondary: #FFA500;
+  --dark: #212529;
+  --light: #f8f9fa;
+  --gray: #868e96;
+  --danger: #fa5252;
+  --success: #40c057;
+  --border: #e9ecef;
 }
 
-/* PAGE STYLE = set up background and center the app */
+/* ---------- PAGE LAYOUT (PT: layout geral | EN: global layout) ---------- */
 body {
-  font-family: sans-serif;        /* Simple clean font */
-  background-color: #f1f3f5;      /* Light gray page background */
-  min-height: 100vh;              /* Take full screen height */
-  display: flex;                  /* Flexbox for easy centering */
+  font-family: sans-serif;
+  background-color: #f1f3f5;
+  min-height: 100vh;
+  display: flex;
   justify-content: center;
   align-items: center;
   padding: 20px;
-  color: var(--dark);             /* Default text color */
+  color: var(--dark);
 }
 
-/* APP BOX = the white card in the middle */
+/* ---------- APP CONTAINER (PT: cartão principal | EN: main card) ---------- */
 .app {
   width: 100%;
-  max-width: 500px;               /* Prevents it from being too wide */
-  background-color: #fff;         /* White background */
-  border-radius: 12px;            /* Rounded corners */
+  max-width: 500px;
+  background: #fff;
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
-/* HEADER = pink top bar with title + date */
+/* ---------- HEADER (PT: topo rosa | EN: pink header) ---------- */
 header {
-  background-color: var(--primary);
+  background: var(--primary);
   color: white;
   padding: 20px 25px;
 }
@@ -62,125 +70,123 @@ header h1 {
 
 header p {
   font-size: 14px;
-  opacity: 0.9; /* Slightly faded date */
+  opacity: 0.9;
 }
 
-/* INPUT SECTION = where user types a task */
+/* ---------- INPUT AREA (PT: adicionar tarefas | EN: add task area) ---------- */
 .todo-input {
   padding: 20px 25px;
   display: flex;
-  gap: 10px;                       /* Space between input and button */
-  background-color: var(--light);
+  gap: 10px;
+  background: var(--light);
   border-bottom: 1px solid var(--border);
 }
 
 .todo-input input {
-  flex: 1;                         /* Input takes all available space */
+  flex: 1;
   padding: 12px 15px;
   border: 1px solid #dee2e6;
-  font-size: 1rem;
-  transition: all 0.2s;
   border-radius: 6px;
+  font-size: 1rem;
+  transition: 0.2s;
 }
 
 .todo-input input:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(119, 73, 248, 0.15); /* Glow effect */
+  box-shadow: 0 0 0 3px rgba(255, 105, 180, 0.2);
 }
 
 .todo-input button {
-  background-color: var(--primary);
+  background: var(--primary);
   color: white;
   width: 40px;
   height: 40px;
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: 0.2s;
 }
 
 .todo-input button:hover {
-  background-color: var(--secondary); /* Slightly different when hovering */
+  background: var(--secondary);
 }
 
-/* FILTER BUTTONS = All | Active | Completed */
+/* ---------- FILTERS (PT: filtros | EN: filters) ---------- */
 .filters {
   display: flex;
   gap: 15px;
-  border-bottom: 1px solid var(--border);
   padding: 15px 25px;
+  border-bottom: 1px solid var(--border);
 }
 
 .filter {
   padding: 5px 3px;
   cursor: pointer;
   color: var(--gray);
-  border-bottom: 2px solid transparent; /* Only visible when active */
-  transition: all 0.2s;
+  border-bottom: 2px solid transparent;
+  transition: 0.2s;
 }
 
 .filter:hover {
-  color: var(--primary); /* Highlight when mouse is over */
+  color: var(--primary);
 }
 
 .filter.active {
   color: var(--primary);
-  border-bottom: 2px solid var(--primary);
+  border-bottom-color: var(--primary);
   font-weight: 500;
 }
 
-/* TASKS LIST = where all <li> tasks live */
+/* ---------- TASK LIST (PT: lista de tarefas | EN: task list) ---------- */
 .todos-container {
   padding: 15px 0;
-  max-height: 300px;   /* Scroll appears if tasks overflow */
+  max-height: 300px;
   overflow-y: auto;
 }
 
 #todos-list {
-  list-style-type: none; /* Removes bullet points */
+  list-style: none;
 }
 
-/* TASK ITEM = each row of the list */
+/* ---------- TASK ITEM (PT: item da lista | EN: list item) ---------- */
 .todo-item {
   padding: 12px 15px;
   display: flex;
   align-items: center;
-  transition: background-color 0.2s;
+  transition: 0.2s;
 }
 
 .todo-item:hover {
-  background-color: var(--light); /* Highlight row on hover */
+  background: var(--light);
 }
 
-/* CHECKBOX = custom design instead of browser’s default */
+/* ---------- CUSTOM CHECKBOX (PT: checkbox personalizado | EN: custom checkbox) ---------- */
 .checkbox-container {
   margin-right: 15px;
 }
 
 .todo-checkbox {
-  opacity: 0;           /* Hide the real checkbox */
+  opacity: 0;
   position: absolute;
 }
 
 .checkmark {
-  display: inline-block;
   width: 20px;
   height: 20px;
   border: 2px solid #dee2e6;
   border-radius: 4px;
+  display: inline-block;
   position: relative;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: 0.2s;
 }
 
-/* When checkbox is checked → green */
 .todo-checkbox:checked + .checkmark {
-  background-color: var(--success);
+  background: var(--success);
   border-color: var(--success);
 }
 
-/* White tick mark (✔) inside green box */
 .todo-checkbox:checked + .checkmark::after {
   content: "";
   position: absolute;
@@ -193,44 +199,40 @@ header p {
   transform: rotate(45deg);
 }
 
-/* TASK TEXT */
+/* ---------- TASK TEXT (PT: texto | EN: text) ---------- */
 .todo-item-text {
-  flex: 1;               /* Take remaining space */
+  flex: 1;
   font-size: 1rem;
-  transition: all 0.2s;
+  transition: 0.2s;
 }
 
-/* Strike-through completed tasks */
 .todo-item.completed .todo-item-text {
   text-decoration: line-through;
   color: var(--gray);
 }
 
-/* DELETE BUTTON (X) */
+/* ---------- DELETE BUTTON (PT: botão apagar | EN: delete button) ---------- */
 .delete-btn {
   background: none;
   border: none;
   color: var(--gray);
   cursor: pointer;
   font-size: 16px;
-  opacity: 0;              /* Hidden by default */
-  transition: all 0.2s;
+  opacity: 0;
+  transition: 0.2s;
 }
 
 .todo-item:hover .delete-btn {
-  opacity: 1;              /* Appears only on hover */
+  opacity: 1;
 }
 
 .delete-btn:hover {
-  color: var(--danger);    /* Turns red on hover */
+  color: var(--danger);
 }
 
-/* EMPTY STATE = message when no tasks exist */
+/* ---------- EMPTY STATE (PT: estado vazio | EN: empty state) ---------- */
 .empty-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  text-align: center;
   padding: 40px 0;
   color: var(--gray);
 }
@@ -241,19 +243,18 @@ header p {
   opacity: 0.7;
 }
 
-/* Class used to hide elements with JS */
 .hidden {
   display: none;
 }
 
-/* FOOTER = bottom area with counter + clear button + GitHub link */
+/* ---------- FOOTER (PT: rodapé | EN: footer) ---------- */
 footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 15px 25px;
   border-top: 1px solid var(--border);
-  background-color: var(--light);
+  background: var(--light);
   font-size: 14px;
 }
 
@@ -266,23 +267,22 @@ footer {
   border: none;
   color: var(--gray);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: 0.2s;
 }
 
 #clear-completed:hover {
   color: var(--danger);
 }
 
-/* GITHUB LINK = small credit at the bottom */
+/* ---------- GITHUB LINK (PT: crédito | EN: credit) ---------- */
 .github-link {
-  margin-top: 10px;
   font-size: 14px;
   color: #333;
 }
 
 .github-link a {
-  text-decoration: none;
   color: inherit;
+  text-decoration: none;
 }
 
 .github-link i {
