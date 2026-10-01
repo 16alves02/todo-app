@@ -123,6 +123,13 @@ Open `index.html` directly in a modern web browser.
 
 ![Todo App Screenshot](assets/screenshot.png)
 
+## ⚠️ Scope & Limitations
+
+- The application has no backend or user account system.
+- Tasks are stored only in the browser's `localStorage`.
+- Data is therefore local to the browser and device where the application is used.
+- There are no automated tests in the repository, so verification is based on manual interaction with the interface.
+
 ## 🧠 What I Learned
 
 This project is a practical exercise in:
