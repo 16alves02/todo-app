@@ -1,99 +1,156 @@
 # ✅ Todo App
 
-> A simple, responsive task manager built with vanilla web technologies.
+> **A small task manager built from the browser up.**
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Open%20Todo%20App-111111?style=for-the-badge)](https://todo-app-three-beta-56.vercel.app)
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
 [![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
 [![JavaScript](https://img.shields.io/badge/JavaScript-ES6%2B-F7DF1E?style=flat-square&logo=javascript&logoColor=111111)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[![Copyright](https://img.shields.io/badge/Code-Proprietary-111111?style=flat-square)](LICENSE)
 
-## Overview
+## 🌐 Live Demo
 
-**Todo App** is a lightweight task manager built without a frontend framework.
+**[Open Todo App](https://todo-app-three-beta-56.vercel.app)**
 
-It provides the core functionality expected from a simple productivity application while keeping the implementation close to the fundamentals of HTML, CSS and JavaScript.
+## 📌 About
 
-## 🎯 Why I Built It
+**Todo App** is a lightweight task manager built with **HTML, CSS and vanilla JavaScript**, without a frontend framework or build system.
 
-This project was created to strengthen the fundamentals behind web applications before relying on larger frameworks.
+The project focuses on the fundamentals behind a browser-based application: capturing user input, updating the DOM, managing application state, filtering data and persisting information locally.
 
-It focuses on:
-
-- Manipulating the DOM with JavaScript
-- Managing application state in the browser
-- Persisting data with `localStorage`
-- Building responsive layouts with CSS
-- Handling user interactions and UI state
-- Creating a complete small application from scratch
-
-The simplicity is intentional. The project makes it easier to see how the pieces of a web application work together.
+It started in **2025** and was revisited in **2026** with improvements to the code comments, structure and documentation.
 
 ## ✨ Features
 
-- ➕ Add tasks
-- ✅ Complete and uncomplete tasks
-- 🗑️ Delete tasks
-- 🔎 Filter by **All**, **Active** and **Completed**
-- 💾 Persist tasks with `localStorage`
-- 📅 Display the current date
-- 🧹 Clear completed tasks
-- 📱 Responsive interface
-- 📝 Empty-state feedback
+### 📝 Task Management
 
-## 🛠️ Tech Stack
+- Add new tasks
+- Add tasks with the **Enter** key or the **+** button
+- Mark tasks as completed
+- Unmark completed tasks
+- Delete individual tasks
+- Clear all completed tasks
 
-- HTML5
-- CSS3
-- JavaScript
-- Font Awesome
-- Browser `localStorage`
+### 🔎 Filtering
 
-No framework or build system is required.
+Switch between:
 
-## 🧠 What I Learned
+- **All**
+- **Active**
+- **Completed**
 
-The project is a practical exercise in understanding the browser as an application platform.
+The interface updates the visible task list according to the selected filter.
 
-It covers the basic flow of:
+### 💾 Local Persistence
+
+Tasks are stored in the browser using:
 
 ```text
-User interaction
-      ↓
-JavaScript logic
-      ↓
-Application state
-      ↓
-DOM update
-      ↓
 localStorage
 ```
 
-That foundation is useful when moving into larger applications and frameworks.
+This means the task list can remain available between browser sessions on the same device and browser.
+
+### 📅 Dynamic Interface
+
+The application also:
+
+- Displays the current date
+- Shows how many tasks remain incomplete
+- Displays an empty-state message when there are no tasks
+- Uses Font Awesome icons for interface actions
+- Provides a responsive layout for smaller screens
+
+## 🧩 How It Works
+
+The application is intentionally simple:
+
+```text
+User input
+    ↓
+JavaScript event
+    ↓
+Todo state
+    ↓
+DOM rendering
+    ↓
+localStorage
+```
+
+There is no backend. The browser is responsible for the application state and local persistence.
+
+## 🛠️ Tech Stack
+
+| Technology | Role |
+| --- | --- |
+| HTML5 | Page structure |
+| CSS3 | Layout, visual design and responsive behaviour |
+| JavaScript ES6+ | Application logic and DOM interaction |
+| Font Awesome | Interface icons |
+| localStorage | Local task persistence |
+
+## 📁 Project Structure
+
+```text
+todo-app/
+├── assets/
+│   └── screenshot.png
+├── index.html
+├── scripts.js
+├── styles.css
+├── LICENSE
+└── README.md
+```
+
+The project deliberately keeps the structure small, making it easy to understand how each layer contributes to the final application.
 
 ## 🚀 Getting Started
 
-No installation or build step is required.
+No installation, package manager or build step is required.
 
-### Clone the repository
+### Clone
 
 ```bash
 git clone https://github.com/16alves02/todo-app.git
 cd todo-app
 ```
 
-### Run the application
+### Run
 
-Open `index.html` directly in a browser.
+Open `index.html` directly in a modern web browser.
 
-## 🌐 Live Project
+## 📸 Preview
 
-**[Open Todo App](https://todo-app-three-beta-56.vercel.app)**
+![Todo App Screenshot](assets/screenshot.png)
+
+## 🧠 What I Learned
+
+This project is a practical exercise in:
+
+- DOM manipulation
+- JavaScript event handling
+- Managing UI state
+- Array operations
+- Conditional rendering
+- Browser storage
+- Responsive CSS
+- Structuring a small application without a framework
+
+The project shows the progression from static web pages towards interactive browser applications.
+
+## 🗓️ Project History
+
+- **2025** - Initial project and core application.
+- **2025** - HTML, CSS and JavaScript functionality developed around the task manager flow.
+- **2026** - Code comments and structure revisited.
+- **2026** - Documentation and copyright information refreshed.
 
 ## 👤 Author
 
 **Leonardo Alves - [@16alves02](https://github.com/16alves02)**
 
-This project is part of the **16alves02** project portfolio and represents my work with web fundamentals, JavaScript and browser-based application logic.
+Part of the **16alves02** project portfolio.
+
 ## 📜 License & Copyright
 
 **Copyright (c) 2025-2026 Leonardo Alves (16alves02). All rights reserved.**
