@@ -77,7 +77,7 @@ This project is an exercise in DOM manipulation, event handling, arrays, functio
 
 - Tasks are stored only in the current browser.
 - There is no authentication, backend, multi-device sync or automated test suite.
-- Task identifiers use the current timestamp, which is simple for this small project but is not a general-purpose ID system.
+- Task identifiers combine the current timestamp with an incrementing counter to avoid collisions when tasks are added quickly. This is sufficient for a small browser project, but it is not a general-purpose ID system.
 
 ## Author
 
