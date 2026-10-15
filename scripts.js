@@ -12,6 +12,7 @@ const filters = document.querySelectorAll(".filter");
 
 let todos = [];
 let currentFilter = "all";
+let nextTodoId = 0;
 
 // Use the form submit event so the button and Enter key work the same way.
 taskForm.addEventListener("submit", (event) => {
@@ -36,7 +37,8 @@ function addTodo(value) {
   }
 
   todos.push({
-    id: Date.now(),
+    // Combine the timestamp with a counter to avoid duplicate IDs in quick submissions.
+    id: `${Date.now()}-${nextTodoId++}`,
     text,
     completed: false,
   });
