@@ -288,3 +288,46 @@ footer {
 .github-link i {
   margin-right: 5px;
 }
+
+
+/* Keep keyboard focus visible for buttons and custom checkboxes. */
+.filter:focus-visible,
+.delete-btn:focus-visible,
+.todo-input button:focus-visible,
+#clear-completed:focus-visible,
+.github-link a:focus-visible,
+.todo-checkbox:focus-visible + .checkmark {
+  outline: 3px solid #343a40;
+  outline-offset: 3px;
+}
+
+/* Give icon-only controls a visible delete action on touch screens. */
+@media (hover: none) {
+  .delete-btn {
+    opacity: 1;
+  }
+}
+
+/* Hide labels visually while keeping them available to screen readers. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
