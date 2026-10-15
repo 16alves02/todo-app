@@ -1,112 +1,93 @@
-// =======================================
-// scripts.js - O "cérebro" da Todo App
-// scripts.js - The "brain" of the Todo App
-// =======================================
-//
-// PT: Este ficheiro torna a aplicação interativa.
-// EN: This file makes the app interactive.
-//
-// PT: Responsável por:
-// EN: Responsible for:
-//  - Adicionar novas tarefas / Adding new tasks
-//  - Marcar tarefas como concluídas / Marking tasks as completed
-//  - Filtrar tarefas (Todas, Ativas, Concluídas) / Filtering tasks
-//  - Guardar tarefas no localStorage / Saving tasks in localStorage
-//
+const STORAGE_KEY = "todos";
 
-// =======================================
-// 1. Selecionar elementos importantes do HTML
-// 1. Grab important HTML elements
-// =======================================
+const taskForm = document.getElementById("todo-form");
+const taskInput = document.getElementById("task-input");
+const todosList = document.getElementById("todos-list");
+const itemsLeft = document.getElementById("items-left");
+const clearCompletedBtn = document.getElementById("clear-completed");
+const emptyState = document.getElementById("empty-state");
+const emptyStateMessage = document.getElementById("empty-state-message");
+const dateElement = document.getElementById("date");
+const filters = document.querySelectorAll(".filter");
 
-const taskInput = document.getElementById("task-input");      // PT: Caixa de texto | EN: Input field
-const addTaskBtn = document.getElementById("add-task");       // PT: Botão "+" | EN: "+" button
-const todosList = document.getElementById("todos-list");      // PT: Lista UL | EN: UL list
-const itemsLeft = document.getElementById("items-left");      // PT: Contador | EN: Items counter
-const clearCompletedBtn = document.getElementById("clear-completed"); // PT: Limpar concluídas | EN: Clear completed
-const emptyState = document.querySelector(".empty-state");    // PT: Mensagem "vazio" | EN: Empty state message
-const dateElement = document.getElementById("date");          // PT: Data atual | EN: Today's date
-const filters = document.querySelectorAll(".filter");         // PT: Filtros | EN: Filter buttons
+let todos = [];
+let currentFilter = "all";
+let nextTodoId = 0;
 
-// =======================================
-// 2. Estrutura de dados
-// 2. Data structure
-// =======================================
-
-let todos = [];              // PT: Lista de tarefas | EN: Array of tasks
-let currentFilter = "all";   // PT: Filtro atual | EN: Current filter
-
-// =======================================
-// 3. Event Listeners (ações do utilizador)
-// 3. Event Listeners (user actions)
-// =======================================
-
-// PT: Clicar no botão "+" → adicionar tarefa
-// EN: Clicking "+" button → add task
-addTaskBtn.addEventListener("click", () => {
+// Use the form submit event so the button and Enter key work the same way.
+taskForm.addEventListener("submit", (event) => {
+  event.preventDefault();
   addTodo(taskInput.value);
 });
 
-// PT: Premir ENTER → adicionar tarefa
-// EN: Pressing ENTER → add task
-taskInput.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") addTodo(taskInput.value);
-});
-
-// PT: Limpar todas as concluídas
-// EN: Clear all completed tasks
 clearCompletedBtn.addEventListener("click", clearCompleted);
 
-// =======================================
-// 4. Funções principais
-// 4. Main functions
-// =======================================
+filters.forEach((filterButton) => {
+  filterButton.addEventListener("click", () => {
+    setActiveFilter(filterButton.dataset.filter);
+  });
+});
 
-// PT: Adicionar nova tarefa
-// EN: Add a new task
-function addTodo(text) {
-  if (text.trim() === "") return; // PT: Ignorar vazio | EN: Ignore empty input
+function addTodo(value) {
+  const text = value.trim();
 
-  const todo = {
-    id: Date.now(),     // PT: ID único | EN: Unique ID
-    text,               // PT: Texto da tarefa | EN: Task text
-    completed: false,   // PT: Começa por não concluída | EN: Starts incomplete
-  };
+  if (!text) {
+    taskInput.focus();
+    return;
+  }
 
-  todos.push(todo);
+  todos.push({
+    // Combine the timestamp with a counter to avoid duplicate IDs in quick submissions.
+    id: `${Date.now()}-${nextTodoId++}`,
+    text,
+    completed: false,
+  });
+
   saveTodos();
   renderTodos();
-  taskInput.value = ""; // PT: Limpar input | EN: Clear input
+
+  taskInput.value = "";
+  taskInput.focus();
 }
 
-// PT: Guardar no localStorage
-// EN: Save to localStorage
 function saveTodos() {
-  localStorage.setItem("todos", JSON.stringify(todos));
-  updateItemsCount();
-  checkEmptyState();
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
+  } catch (error) {
+    // The app remains usable for this session if browser storage is unavailable.
+    console.warn("Tasks could not be saved in this browser.", error);
+  }
 }
 
-// PT: Contar tarefas por concluir
-// EN: Count uncompleted tasks
-function updateItemsCount() {
-  const uncompleted = todos.filter((todo) => !todo.completed);
-  itemsLeft.textContent = `${uncompleted.length} item${
-    uncompleted.length !== 1 ? "s" : ""
-  } left`;
+function loadTodos() {
+  try {
+    const storedTodos = localStorage.getItem(STORAGE_KEY);
+
+    if (!storedTodos) {
+      todos = [];
+      return;
+    }
+
+    const parsedTodos = JSON.parse(storedTodos);
+
+    if (!Array.isArray(parsedTodos)) {
+      throw new Error("Saved tasks must be a list.");
+    }
+
+    // Ignore invalid entries so a damaged storage value does not break the app.
+    todos = parsedTodos.filter(
+      (todo) =>
+        todo &&
+        (typeof todo.id === "number" || typeof todo.id === "string") &&
+        typeof todo.text === "string" &&
+        typeof todo.completed === "boolean"
+    );
+  } catch (error) {
+    console.warn("Saved tasks could not be loaded. Starting with an empty list.", error);
+    todos = [];
+  }
 }
 
-// PT: Mostrar/ocultar estado vazio
-// EN: Show/hide empty state
-function checkEmptyState() {
-  const filtered = filterTodos(currentFilter);
-  filtered.length === 0
-    ? emptyState.classList.remove("hidden")
-    : emptyState.classList.add("hidden");
-}
-
-// PT: Filtrar tarefas
-// EN: Filter tasks
 function filterTodos(filter) {
   switch (filter) {
     case "active":
@@ -118,19 +99,19 @@ function filterTodos(filter) {
   }
 }
 
-// PT: Renderizar tarefas no ecrã
-// EN: Render tasks on screen
 function renderTodos() {
-  todosList.innerHTML = ""; // PT: Limpar lista | EN: Clear list
+  todosList.replaceChildren();
 
-  const filtered = filterTodos(currentFilter);
+  const visibleTodos = filterTodos(currentFilter);
 
-  filtered.forEach((todo) => {
+  visibleTodos.forEach((todo) => {
     const todoItem = document.createElement("li");
     todoItem.classList.add("todo-item");
-    if (todo.completed) todoItem.classList.add("completed");
 
-    // === Checkbox ===
+    if (todo.completed) {
+      todoItem.classList.add("completed");
+    }
+
     const checkboxContainer = document.createElement("label");
     checkboxContainer.classList.add("checkbox-container");
 
@@ -138,103 +119,109 @@ function renderTodos() {
     checkbox.type = "checkbox";
     checkbox.classList.add("todo-checkbox");
     checkbox.checked = todo.completed;
+    checkbox.setAttribute(
+      "aria-label",
+      todo.completed
+        ? `Mark "${todo.text}" as active`
+        : `Mark "${todo.text}" as completed`
+    );
     checkbox.addEventListener("change", () => toggleTodo(todo.id));
 
     const checkmark = document.createElement("span");
     checkmark.classList.add("checkmark");
+    checkmark.setAttribute("aria-hidden", "true");
 
-    checkboxContainer.appendChild(checkbox);
-    checkboxContainer.appendChild(checkmark);
+    checkboxContainer.append(checkbox, checkmark);
 
-    // === Texto ===
     const todoText = document.createElement("span");
     todoText.classList.add("todo-item-text");
     todoText.textContent = todo.text;
 
-    // === Botão apagar ===
-    const deleteBtn = document.createElement("button");
-    deleteBtn.classList.add("delete-btn");
-    deleteBtn.innerHTML = '<i class="fas fa-times"></i>';
-    deleteBtn.addEventListener("click", () => deleteTodo(todo.id));
+    const deleteButton = document.createElement("button");
+    deleteButton.type = "button";
+    deleteButton.classList.add("delete-btn");
+    deleteButton.setAttribute("aria-label", `Delete "${todo.text}"`);
+    deleteButton.title = `Delete "${todo.text}"`;
 
-    // PT: Montar o item
-    // EN: Assemble the item
-    todoItem.appendChild(checkboxContainer);
-    todoItem.appendChild(todoText);
-    todoItem.appendChild(deleteBtn);
+    const deleteIcon = document.createElement("i");
+    deleteIcon.className = "fas fa-times";
+    deleteIcon.setAttribute("aria-hidden", "true");
+    deleteButton.appendChild(deleteIcon);
+    deleteButton.addEventListener("click", () => deleteTodo(todo.id));
 
+    todoItem.append(checkboxContainer, todoText, deleteButton);
     todosList.appendChild(todoItem);
   });
+
+  updateItemsCount();
+  updateEmptyState(visibleTodos.length);
 }
 
-// PT: Remover todas as concluídas
-// EN: Remove all completed tasks
+function updateItemsCount() {
+  const remaining = todos.filter((todo) => !todo.completed).length;
+  const itemLabel = remaining === 1 ? "item" : "items";
+
+  itemsLeft.textContent = `${remaining} ${itemLabel} left`;
+}
+
+function updateEmptyState(visibleCount) {
+  emptyState.classList.toggle("hidden", visibleCount > 0);
+
+  const messages = {
+    all: "No tasks here yet.",
+    active: "No active tasks.",
+    completed: "No completed tasks.",
+  };
+
+  emptyStateMessage.textContent = messages[currentFilter] || messages.all;
+}
+
 function clearCompleted() {
   todos = todos.filter((todo) => !todo.completed);
   saveTodos();
   renderTodos();
 }
 
-// PT: Alternar estado (ativo ↔ concluído)
-// EN: Toggle task status (active ↔ completed)
 function toggleTodo(id) {
   todos = todos.map((todo) =>
     todo.id === id ? { ...todo, completed: !todo.completed } : todo
   );
+
   saveTodos();
   renderTodos();
 }
 
-// PT: Apagar uma tarefa
-// EN: Delete a single task
 function deleteTodo(id) {
   todos = todos.filter((todo) => todo.id !== id);
   saveTodos();
   renderTodos();
 }
 
-// PT: Carregar tarefas guardadas
-// EN: Load saved tasks
-function loadTodos() {
-  const stored = localStorage.getItem("todos");
-  if (stored) todos = JSON.parse(stored);
-  renderTodos();
-}
-
-// PT: Ativar filtros
-// EN: Enable filters
-filters.forEach((filter) => {
-  filter.addEventListener("click", () => {
-    setActiveFilter(filter.getAttribute("data-filter"));
-  });
-});
-
-// PT: Destacar filtro ativo
-// EN: Highlight active filter
 function setActiveFilter(filter) {
   currentFilter = filter;
 
-  filters.forEach((item) => {
-    item.classList.toggle(
-      "active",
-      item.getAttribute("data-filter") === filter
-    );
+  filters.forEach((filterButton) => {
+    const isActive = filterButton.dataset.filter === filter;
+
+    filterButton.classList.toggle("active", isActive);
+    filterButton.setAttribute("aria-pressed", String(isActive));
   });
 
   renderTodos();
 }
 
-// PT: Mostrar data atual
-// EN: Display today's date
 function setDate() {
-  const options = { weekday: "long", month: "short", day: "numeric" };
-  dateElement.textContent = new Date().toLocaleDateString("en-US", options);
+  const options = {
+    weekday: "long",
+    month: "short",
+    day: "numeric",
+  };
+
+  dateElement.textContent = new Date().toLocaleDateString("en-GB", options);
 }
 
-// PT: Iniciar aplicação
-// EN: Initialize app
 window.addEventListener("DOMContentLoaded", () => {
   loadTodos();
-  updateItemsCount();
   setDate();
+  renderTodos();
 });

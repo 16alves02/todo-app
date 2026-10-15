@@ -1,167 +1,86 @@
-# ✅ Todo App
+# Todo App
 
-> **A small task manager built from the browser up.**
+A small browser-based task manager built with HTML, CSS and vanilla JavaScript. The project focuses on the fundamentals of an interactive web application without relying on a frontend framework or build tools.
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-Open%20Todo%20App-111111?style=for-the-badge)](https://todo-app-three-beta-56.vercel.app)
-[![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
-[![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
-[![JavaScript](https://img.shields.io/badge/JavaScript-ES6%2B-F7DF1E?style=flat-square&logo=javascript&logoColor=111111)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-[![Copyright](https://img.shields.io/badge/Code-Proprietary-111111?style=flat-square)](LICENSE)
+**[Open the live demo](https://todo-app-three-beta-56.vercel.app)**
 
-## 🌐 Live Demo
+![Todo App screenshot](assets/screenshot.png)
 
-**[Open Todo App](https://todo-app-three-beta-56.vercel.app)**
+## Features
 
-## 📌 About
+- Add tasks using the button or Enter key.
+- Mark tasks as completed or active.
+- Filter the list by all, active or completed tasks.
+- Delete individual tasks or clear all completed tasks.
+- Save tasks in the browser with `localStorage`.
+- Show the current date and the number of unfinished tasks.
+- Use the interface with keyboard navigation and accessible button labels.
+- Adapt the layout to smaller screens.
 
-**Todo App** is a lightweight task manager built with **HTML, CSS and vanilla JavaScript**, without a frontend framework or build system.
+## Built with
 
-The project focuses on the fundamentals behind a browser-based application: capturing user input, updating the DOM, managing application state, filtering data and persisting information locally.
-
-It started in **2025** and was revisited in **2026** with improvements to the code comments, structure and documentation.
-
-## ✨ Features
-
-### 📝 Task Management
-
-- Add new tasks
-- Add tasks with the **Enter** key or the **+** button
-- Mark tasks as completed
-- Unmark completed tasks
-- Delete individual tasks
-- Clear all completed tasks
-
-### 🔎 Filtering
-
-Switch between:
-
-- **All**
-- **Active**
-- **Completed**
-
-The interface updates the visible task list according to the selected filter.
-
-### 💾 Local Persistence
-
-Tasks are stored in the browser using:
-
-```text
-localStorage
-```
-
-This means the task list can remain available between browser sessions on the same device and browser.
-
-### 📅 Dynamic Interface
-
-The application also:
-
-- Displays the current date
-- Shows how many tasks remain incomplete
-- Displays an empty-state message when there are no tasks
-- Uses Font Awesome icons for interface actions
-- Provides a responsive layout for smaller screens
-
-## 🧩 How It Works
-
-The application is intentionally simple:
-
-```text
-User input
-    ↓
-JavaScript event
-    ↓
-Todo state
-    ↓
-DOM rendering
-    ↓
-localStorage
-```
-
-There is no backend. The browser is responsible for the application state and local persistence.
-
-## 🛠️ Tech Stack
-
-| Technology | Role |
+| Technology | Purpose |
 | --- | --- |
-| HTML5 | Page structure |
-| CSS3 | Layout, visual design and responsive behaviour |
-| JavaScript ES6+ | Application logic and DOM interaction |
+| HTML | Page structure and semantic elements |
+| CSS | Layout, colours, responsive styling and focus states |
+| JavaScript | Events, arrays, DOM updates and application state |
+| `localStorage` | Saving tasks between visits in the same browser |
 | Font Awesome | Interface icons |
-| localStorage | Local task persistence |
 
-## 📁 Project Structure
+## How it works
+
+The application keeps its tasks in a JavaScript array. When a task changes, the app saves the array to `localStorage` and updates the visible list.
 
 ```text
-todo-app/
-├── assets/
-│   └── screenshot.png
-├── index.html
-├── scripts.js
-├── styles.css
-├── LICENSE
-└── README.md
+User action
+    |
+    v
+Update the task array
+    |
+    +----> Save to localStorage
+    |
+    v
+Render the filtered list
 ```
 
-The project deliberately keeps the structure small, making it easy to understand how each layer contributes to the final application.
+Saved data belongs to the current browser and device. There is no server, account system or cloud synchronisation.
 
-## 🚀 Getting Started
+## Run locally
 
-No installation, package manager or build step is required.
-
-### Clone
+No installation is required.
 
 ```bash
 git clone https://github.com/16alves02/todo-app.git
 cd todo-app
 ```
 
-### Run
+Open `index.html` in a modern browser.
 
-Open `index.html` directly in a modern web browser.
+## Manual test checklist
 
-## 📸 Preview
+- Add a task by clicking the plus button.
+- Add a task by pressing Enter.
+- Try to add a blank task or a task with spaces only.
+- Mark a task as completed, then mark it active again.
+- Check that All, Active and Completed show the expected tasks.
+- Delete one task and clear completed tasks.
+- Refresh the page and verify that saved tasks return.
+- Try keyboard navigation through the input, filters and task actions.
+- Check the layout at a narrow viewport.
+- If possible, test with browser storage cleared or unavailable.
 
-![Todo App Screenshot](assets/screenshot.png)
+## What this project demonstrates
 
-## ⚠️ Scope & Limitations
+This project is an exercise in DOM manipulation, event handling, arrays, functions, filtering, conditional rendering, browser storage and basic accessibility. The JavaScript is intentionally kept in a single file so the relationship between state, events and rendering remains easy to follow.
 
-- The application has no backend or user account system.
-- Tasks are stored only in the browser's `localStorage`.
-- Data is therefore local to the browser and device where the application is used.
-- There are no automated tests in the repository, so verification is based on manual interaction with the interface.
+## Known limitations
 
-## 🧠 What I Learned
+- Tasks are stored only in the current browser.
+- There is no authentication, backend, multi-device sync or automated test suite.
+- Task identifiers use the current timestamp, which is simple for this small project but is not a general-purpose ID system.
 
-This project is a practical exercise in:
+## Author
 
-- DOM manipulation
-- JavaScript event handling
-- Managing UI state
-- Array operations
-- Conditional rendering
-- Browser storage
-- Responsive CSS
-- Structuring a small application without a framework
+Leonardo Alves · [@16alves02](https://github.com/16alves02) · [Portfolio](https://16alves02-com.vercel.app/)
 
-The project shows the progression from static web pages towards interactive browser applications.
-
-## 🗓️ Project History
-
-- **2025** - Initial project and core application.
-- **2025** - HTML, CSS and JavaScript functionality developed around the task manager flow.
-- **2026** - Code comments and structure revisited.
-- **2026** - Documentation and copyright information refreshed.
-
-## 👤 Author
-
-**Leonardo Alves - [@16alves02](https://github.com/16alves02)**
-
-Part of the **16alves02** project portfolio.
-
-## 📜 License & Copyright
-
-**Copyright (c) 2025-2026 Leonardo Alves (16alves02). All rights reserved.**
-
-This project is **not open source**. The source code is published for viewing and educational reference, but it may not be copied, redistributed, modified for public or commercial use, sublicensed, sold, or presented as someone else's work without prior written permission.
-
-See the [LICENSE](./LICENSE) file for the full terms.
+See [LICENSE](LICENSE) for the terms under which this source code may be used.
