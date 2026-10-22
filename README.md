@@ -1,6 +1,6 @@
 # Todo App
 
-A small browser-based task manager built with HTML, CSS and vanilla JavaScript. The project focuses on the fundamentals of an interactive web application without relying on a frontend framework or build tools.
+A browser-based task manager built with HTML, CSS and vanilla JavaScript. This project focuses on the fundamentals of an interactive web application without a frontend framework or build tools.
 
 **[Open the live demo](https://todo-app-three-beta-56.vercel.app)**
 
@@ -8,13 +8,13 @@ A small browser-based task manager built with HTML, CSS and vanilla JavaScript. 
 
 ## Features
 
-- Add tasks using the button or Enter key.
-- Mark tasks as completed or active.
-- Filter the list by all, active or completed tasks.
+- Add tasks using the button or the Enter key.
+- Mark tasks as completed or active again.
+- Filter tasks by all, active or completed.
 - Delete individual tasks or clear all completed tasks.
-- Save tasks in the browser with `localStorage`.
-- Show the current date and the number of unfinished tasks.
-- Use the interface with keyboard navigation and accessible button labels.
+- Save tasks in the browser using `localStorage`.
+- Display the current date and the number of pending tasks.
+- Support keyboard navigation and provide accessible labels for controls.
 - Adapt the layout to smaller screens.
 
 ## Built with
@@ -22,14 +22,14 @@ A small browser-based task manager built with HTML, CSS and vanilla JavaScript. 
 | Technology | Purpose |
 | --- | --- |
 | HTML | Page structure and semantic elements |
-| CSS | Layout, colours, responsive styling and focus states |
+| CSS | Layout, styling, responsive behaviour and focus states |
 | JavaScript | Events, arrays, DOM updates and application state |
 | `localStorage` | Saving tasks between visits in the same browser |
 | Font Awesome | Interface icons |
 
 ## How it works
 
-The application keeps its tasks in a JavaScript array. When a task changes, the app saves the array to `localStorage` and updates the visible list.
+Tasks are stored in a JavaScript array. When the task list changes, the app saves the updated array to `localStorage` and renders the visible, filtered list.
 
 ```text
 User action
@@ -43,11 +43,11 @@ Update the task array
 Render the filtered list
 ```
 
-Saved data belongs to the current browser and device. There is no server, account system or cloud synchronisation.
+Saved tasks belong to the browser and device where they were created. The app has no backend, user accounts or cross-device synchronisation.
 
 ## Run locally
 
-No installation is required.
+No installation or build step is required.
 
 ```bash
 git clone https://github.com/16alves02/todo-app.git
@@ -56,28 +56,30 @@ cd todo-app
 
 Open `index.html` in a modern browser.
 
-## Manual test checklist
+## Manual testing checklist
 
-- Add a task by clicking the plus button.
+There is no automated test suite yet. Use this checklist to check the main behaviours after making changes:
+
+- Add a task using the plus button.
 - Add a task by pressing Enter.
-- Try to add a blank task or a task with spaces only.
+- Try adding a blank task or one containing only spaces.
 - Mark a task as completed, then mark it active again.
-- Check that All, Active and Completed show the expected tasks.
-- Delete one task and clear completed tasks.
-- Refresh the page and verify that saved tasks return.
-- Try keyboard navigation through the input, filters and task actions.
-- Check the layout at a narrow viewport.
+- Confirm that the All, Active and Completed filters show the expected tasks.
+- Delete a task and clear completed tasks.
+- Refresh the page and confirm that saved tasks are restored.
+- Navigate the input, filters and task actions using only the keyboard.
+- Check the layout at a narrow screen width.
 - If possible, test with browser storage cleared or unavailable.
 
 ## What this project demonstrates
 
-This project is an exercise in DOM manipulation, event handling, arrays, functions, filtering, conditional rendering, browser storage and basic accessibility. The JavaScript is intentionally kept in a single file so the relationship between state, events and rendering remains easy to follow.
+This project provides practice with DOM manipulation, event handling, arrays, functions, filtering, conditional rendering, browser storage and basic accessibility. The JavaScript is kept in a single file so the relationship between state, events and rendering is easy to follow.
 
 ## Known limitations
 
-- Tasks are stored only in the current browser.
-- There is no authentication, backend, multi-device sync or automated test suite.
-- Task identifiers combine the current timestamp with an incrementing counter to avoid collisions when tasks are added quickly. This is sufficient for a small browser project, but it is not a general-purpose ID system.
+- Tasks are stored only in the browser where they were created.
+- There is no authentication, backend, cross-device synchronisation or automated test suite.
+- Task IDs combine the current timestamp with an incrementing counter. This is sufficient for a small project, but is not a general-purpose ID system.
 
 ## Author
 
