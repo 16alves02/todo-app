@@ -83,6 +83,6 @@ This project provides practice with DOM manipulation, event handling, arrays, fu
 
 ## Author
 
-Leonardo Alves · [@16alves02](https://github.com/16alves02) · [Portfolio](https://16alves02-com.vercel.app/)
+Leonardo Alves · [@16alves02](https://github.com/16alves02) · [Portfolio](https://16alves02.netlify.app/)
 
 See [LICENSE](LICENSE) for the terms under which this source code may be used.
