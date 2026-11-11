@@ -1,0 +1,51 @@
+name: Quality checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: todo-app-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: JavaScript and asset checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Check JavaScript syntax
+        run: node --check scripts.js
+
+      - name: Check local HTML assets
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFileSync, existsSync } from 'node:fs';
+
+          const html = readFileSync('index.html', 'utf8');
+          const localAssets = [
+            ...[...html.matchAll(/<script[^>]+src=["']([^"']+)["']/g)].map(match => match[1]),
+            ...[...html.matchAll(/<link[^>]+href=["']([^"']+\.css)["']/g)].map(match => match[1]),
+          ].filter(path => !/^(https?:)?\/\//.test(path));
+
+          const missing = localAssets.filter(path => !existsSync(path));
+          if (missing.length > 0) {
+            console.error('Missing local assets:', missing.join(', '));
+            process.exit(1);
+          }
+
+          console.log(`Verified ${localAssets.length} local script/style references.`);
+          NODE
