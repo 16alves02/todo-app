@@ -56,9 +56,13 @@ cd todo-app
 
 Open `index.html` in a modern browser.
 
-## Manual testing checklist
+## Automated quality checks
 
-There is no automated test suite yet. Use this checklist to check the main behaviours after making changes:
+GitHub Actions runs on pushes and pull requests to `main`. It checks JavaScript syntax and verifies that local JavaScript and CSS files referenced by the HTML exist.
+
+These checks do **not** replace functional tests in a browser. There is no automated interaction test suite yet.
+
+## Manual testing checklist
 
 - Add a task using the plus button.
 - Add a task by pressing Enter.
@@ -78,7 +82,7 @@ This project provides practice with DOM manipulation, event handling, arrays, fu
 ## Known limitations
 
 - Tasks are stored only in the browser where they were created.
-- There is no authentication, backend, cross-device synchronisation or automated test suite.
+- There is no authentication, backend, cross-device synchronisation or automated interaction test suite.
 - Task IDs combine the current timestamp with an incrementing counter. This is sufficient for a small project, but is not a general-purpose ID system.
 
 ## Author
