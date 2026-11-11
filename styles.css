@@ -6,12 +6,12 @@
 }
 
 :root {
-  --primary: #ff69b4;
-  --secondary: #ffa500;
+  --primary: #b83280;
+  --secondary: #a85a00;
   --dark: #212529;
   --light: #f8f9fa;
-  --gray: #868e96;
-  --danger: #fa5252;
+  --gray: #667085;
+  --danger: #c92a2a;
   --success: #40c057;
   --border: #e9ecef;
 }
