@@ -1,3 +1,5 @@
+> **Idioma / Language:** [English](README.md) · [Português (Portugal)](README.pt-PT.md)
+
 # Todo App
 
 A browser-based task manager built with HTML, CSS and vanilla JavaScript. This project focuses on the fundamentals of an interactive web application without a frontend framework or build tools.
