@@ -2,7 +2,7 @@
 
 A browser-based task manager built with HTML, CSS and vanilla JavaScript. This project focuses on the fundamentals of an interactive web application without a frontend framework or build tools.
 
-**[Open the live demo](https://todo-app-three-beta-56.vercel.app)**
+**[Open the live demo](https://todo-app-16alves02.vercel.app)**
 
 ![Todo App screenshot](assets/screenshot.png)
 
